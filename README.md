@@ -50,9 +50,8 @@ The **Oil Spill Detection and Response System** is an end-to-end solution for re
 
 ---
 
-## 🧠 Architecture
+📌 Workflow Architecture
 
-```text
                     +-----------------------+
                     | Sentinel-1 SAR Data   | <---- Sentinel Hub API
                     +-----------------------+
@@ -84,35 +83,38 @@ The **Oil Spill Detection and Response System** is an end-to-end solution for re
             | - Coordinates, Area, Vessel Data     |
             | - Embedded Plots & Maps              |
             +--------------------------------------+
+🛠 Technologies Used
+Python 3.11
 
+Sentinel Hub API – for accessing Sentinel-1 SAR data
 
----
+AIS CSV Data – Sample dataset: Ais_sample.csv
 
-## 🛠 Technologies Used
+yagmail – Email notification service
 
-- **Python 3.11**
-- **Sentinel Hub API** – for accessing Sentinel-1 SAR data
-- **AIS CSV Data** – Sample dataset: `Ais_sample.csv`
-- **yagmail** – Email notification service
-- **twilio** – SMS alert system
-- **reportlab** – PDF report generation
-- **pandas**, **numpy**, **scikit-learn** – Data analysis and ML
-- **matplotlib**, **Pillow** – Data visualization and image handling
-- **dotenv** – Secure environment variable management
+twilio – SMS alert system
 
----
+reportlab – PDF report generation
 
-## 📦 Installation
+pandas, numpy, scikit-learn – Data analysis and ML
 
-### 1. Clone the Repository
+matplotlib, Pillow – Data visualization and image handling
 
+dotenv – Secure environment variable management
 
-
-```bash
+📦 Installation
+Clone the Repository
+bash
+Copy
+Edit
 git clone https://github.com/your-username/oil-spill-detection-mumbai.git
 cd oil-spill-detection-mumbai
+Set Up Environment Variables
+Create a .env file and add the following:
 
-#🔐 Environment Variables
+env
+Copy
+Edit
 # Sentinel Hub Credentials
 SENTINELHUB_CLIENT_ID=your_client_id
 SENTINELHUB_CLIENT_SECRET=your_client_secret
@@ -127,9 +129,7 @@ TWILIO_SID=your_twilio_sid
 TWILIO_AUTH_TOKEN=your_twilio_token
 TWILIO_PHONE=+1234567890
 RECEIVER_PHONE=+0987654321
-
-
-#🚀 Future Enhancements
+🚀 Future Enhancements
 🔁 Real-time automation on cloud (AWS/GCP/Azure)
 
 🛰️ Use Sentinel-2 optical or drone data for cross-validation
@@ -144,10 +144,10 @@ RECEIVER_PHONE=+0987654321
 
 🛟 API integration with Indian Coast Guard/MoES
 
- #📜 License
- This project is licensed under the MIT License. See LICENSE for details.
+📜 License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-#🙌 Acknowledgments
+🙌 Acknowledgments
 ESA Copernicus Programme – Sentinel-1 SAR Data
 
 Sentinel Hub – Evalscript and API support
@@ -158,7 +158,8 @@ Twilio – SMS delivery platform
 
 ReportLab – PDF generation in Python
 
-#🧠 Maintainer
+🧠 Maintainer
 Mohammed Mishal
 📧 mohammedmishal430@gmail.com
 🌐 LinkedIn
+
