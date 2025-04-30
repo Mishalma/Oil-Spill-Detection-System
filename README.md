@@ -1,6 +1,6 @@
 # 🌊 Oil Spill Detection and Response System – Indian Ocean Region
 
-A Python-based system that leverages Sentinel-1 satellite imagery and AIS vessel data to automatically detect oil spills along the Mumbai coast, identify suspicious vessel activities, and alert relevant stakeholders via email and SMS with a detailed PDF report.
+A Python-based system that leverages Sentinel-1 satellite imagery and AIS vessel data to automatically detect oil spills along the Indian Ocean coast, identify suspicious vessel activities, and alert relevant stakeholders via email and SMS with a detailed PDF report.
 
 ---
 
@@ -85,7 +85,9 @@ The **Oil Spill Detection and Response System** is an end-to-end solution for re
             | - Embedded Plots & Maps              |
             +--------------------------------------+
 
+
 ---
+
 ## 🛠 Technologies Used
 
 - **Python 3.11**
@@ -103,6 +105,8 @@ The **Oil Spill Detection and Response System** is an end-to-end solution for re
 ## 📦 Installation
 
 ### 1. Clone the Repository
+
+
 
 ```bash
 git clone https://github.com/your-username/oil-spill-detection-mumbai.git
