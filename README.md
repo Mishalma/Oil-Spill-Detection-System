@@ -1,108 +1,207 @@
-**Real-Time Oil Spill Detection System Using AIS Data and Satellite Imagery**
-This project provides a comprehensive solution for detecting oil spills by analyzing vessel anomalies using AIS (Automatic Identification System) data and satellite imagery from Sentinel-1. It processes AIS data to identify unusual vessel behavior, fetches satellite images of the corresponding locations, and analyzes them for potential oil spills. If an oil spill is detected, an alert is generated.
+# 🌊 Oil Spill Detection and Response System – Indian Ocean Region
 
-Table of Contents
-Features
-Installation
-Usage
-Project Structure
-Data Sources
-Satellite Imagery
-Deep Learning Detection
-Alerts
-License
-Features
-AIS Anomaly Detection: Uses Isolation Forest to detect abnormal vessel behavior based on AIS data (e.g., sudden changes in speed, course).
-Satellite Imagery Retrieval: Automatically fetches Sentinel-1 satellite data for areas where anomalies were detected.
-Oil Spill Detection: Processes satellite images to identify oil spill areas using pixel analysis.
-Real-Time Alerts: Generates real-time email and SMS alerts if an oil spill is detected.
-Installation
-To run this project locally, follow these steps:
+A Python-based system that leverages Sentinel-1 satellite imagery and AIS vessel data to automatically detect oil spills along the Mumbai coast, identify suspicious vessel activities, and alert relevant stakeholders via email and SMS with a detailed PDF report.
 
-1. Clone the repository:
+---
+
+## 📌 Table of Contents
+- [Overview](#-overview)
+- [Objectives](#-objectives)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Technologies Used](#-technologies-used)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Environment Variables](#-environment-variables)
+- [Sample Output](#-sample-output)
+- [Deployment Plan](#-deployment-plan)
+- [Future Enhancements](#-future-enhancements)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
+
+---
+
+## 📖 Overview
+
+The **Oil Spill Detection and Response System** is an end-to-end solution for real-time oil spill surveillance in Mumbai's coastal waters. It uses Sentinel-1 Synthetic Aperture Radar (SAR) data to detect oil spills and correlates anomalies from AIS data to identify potentially responsible vessels. When a spill is detected, it triggers automated email/SMS alerts and generates a PDF report with actionable insights.
+
+---
+
+## 🎯 Objectives
+
+- Detect oil spills using Sentinel-1 SAR (VV polarization) data.
+- Monitor and analyze AIS (Automatic Identification System) data for vessel anomaly detection.
+- Correlate vessel behavior with detected spill locations and times.
+- Notify stakeholders with spill coordinates, affected area, and suspected vessels.
+- Generate a PDF report with embedded images and analysis.
+- Design a modular and scalable system for reuse across regions.
+
+---
+
+## ✨ Features
+
+- ✅ **Oil Spill Detection** from Sentinel-1 imagery
+- 🚢 **AIS Vessel Anomaly Detection** using Isolation Forest
+- 📬 **Email and SMS Alerts** to notify stakeholders
+- 📄 **PDF Report Generation** with spill and vessel data
+- 🗺️ **Geospatial Visualizations** of spills and vessel tracks
+- 🔐 **Secure Credential Handling** via environment variables
+- ☁️ **Scalable & Modular Design** for cloud deployment
+
+---
+
+## 🧠 Architecture
+
+```text
+                    +-----------------------+
+                    | Sentinel-1 SAR Data   | <---- Sentinel Hub API
+                    +-----------------------+
+                               |
+                               v
+             +--------------------------------------+
+             | Oil Spill Detection (evalscript)     |
+             | - Image Processing & Thresholding    |
+             | - Area Calculation                   |
+             +--------------------------------------+
+                               |
+                               v
+         +-------------------------------------------+
+         | AIS Data Processing (Ais_sample.csv)       |
+         | - Speed/Course/Distance Features           |
+         | - Isolation Forest for Anomaly Detection   |
+         +-------------------------------------------+
+                               |
+                               v
+            +--------------------------------------+
+            | Alerting System                      |
+            | - Email via Gmail SMTP (yagmail)     |
+            | - SMS via Twilio API                 |
+            +--------------------------------------+
+                               |
+                               v
+            +--------------------------------------+
+            | Report Generator (reportlab)         |
+            | - Coordinates, Area, Vessel Data     |
+            | - Embedded Plots & Maps              |
+            +--------------------------------------+
+
+
+🛠 Technologies Used
+Python 3.11
+
+Sentinel Hub API (Sentinel-1 SAR)
+
+AIS CSV Data (Sample: Ais_sample.csv)
+
+yagmail, twilio – for email/SMS alerts
+
+reportlab – PDF report generation
+
+pandas, numpy, scikit-learn, matplotlib, Pillow
+
+dotenv – Secure configuration handling
+
+📦 Installation
+Clone the Repository
 bash
-Copy code
-git clone https://github.com/DR-skcet/Oil-spill-Detection-using-AIS-Data-and-Satellite-Image.git
-cd oil-spill-detection
-2. Install required packages:
+Copy
+Edit
+git clone https://github.com/your-username/oil-spill-detection-mumbai.git
+cd oil-spill-detection-mumbai
+Create Conda Environment
 bash
-Copy code
+Copy
+Edit
+conda env create -f environment.yml
+conda activate oil_spill_detection
+Install Additional Dependencies (if needed)
+bash
+Copy
+Edit
 pip install -r requirements.txt
-3. Set up environment variables:
-Create a .env file in the root directory to store your API keys and credentials:
-
-makefile
-Copy code
-SENTINEL_HUB_CLIENT_ID=your_client_id
-SENTINEL_HUB_SECRET_KEY=your_secret_key
-SMS_API_KEY=your_sms_api_key
-EMAIL_API_KEY=your_email_api_key
-4. Prepare the AIS Data:
-Ensure you have the AIS data in AIS_data.csv file format with the following columns:
-
-MMSI: Unique vessel identifier
-BaseDateTime: Timestamp
-SOG: Speed Over Ground
-COG: Course Over Ground
-LON: Longitude
-LAT: Latitude
-You can obtain AIS data from the following sources:
-
-MarineTraffic
-Vessel Finder
-AIS Hub
-Make sure your AIS data is formatted correctly before running the program.
-
-5. Run the system:
-Run the main script to begin AIS anomaly detection and trigger satellite oil spill analysis:
+🚀 Usage
+Run the main detection script:
 
 bash
-Copy code
-python main.py
-Usage
-Once the system is up and running, it will:
+Copy
+Edit
+python oil_spill_detection.py
+Output files generated:
 
-Continuously monitor and process the AIS data from AIS_data.csv.
-Detect anomalies in vessel behavior using Isolation Forest.
-For each anomaly, it will retrieve the corresponding Sentinel-1 satellite data.
-Analyze the satellite image to detect any oil spills.
-If an oil spill is detected, an alert will be sent via SMS and email.
-Oil Spill Detection Example
-The following image shows the process of detecting oil spills in an area identified by anomalous vessel activity.
+oil_spill_detection_mumbai.png – Binary spill map
 
+ais_anomalies.png – Highlighted anomalous vessel movements
 
-Project Structure
-bash
-Copy code
-.
-├── main.py                 # Main script for AIS anomaly detection and triggering satellite data analysis
-├── Sentinelhub.py          # Script to retrieve satellite images using Sentinel Hub API
-├── deeplearning.py         # Image processing and deep learning model for oil spill detection
-├── APIrequest.py           # Additional API handling for satellite data requests
-├── AIS_data.csv            # Sample AIS data
-├── requirements.txt        # Required Python packages
-├── README.md               # This file
-└── .env                    # Environment variables (API keys)
-Data Sources
-AIS Data
-Automatic Identification System (AIS) data is used to track vessels' real-time positions and movements. Anomalies in this data may indicate dangerous or unusual behavior, such as erratic speed or unexpected stops. You can source AIS data from:
+oil_spill_report.pdf – Detailed PDF report
 
-MarineTraffic
-Vessel Finder
-AIS Hub
-Satellite Imagery
-The system retrieves radar satellite images from the Sentinel-1 satellite via the Sentinel Hub API. Sentinel-1 data provides high-resolution radar images that can be processed to detect oil spills.
+Email and SMS sent to configured recipients
 
-Deep Learning Detection
-The deeplearning.py script processes the fetched satellite images and identifies areas of potential oil spills. The system uses image segmentation techniques to detect dark areas consistent with oil spill characteristics.
+🔐 Environment Variables
+Create a .env file in the root directory with the following:
 
-Alerts
-If an oil spill is detected, the system generates real-time alerts. These alerts include:
+env
+Copy
+Edit
+SENTINELHUB_CLIENT_ID=your_client_id
+SENTINELHUB_CLIENT_SECRET=your_client_secret
 
-SMS notifications via the configured SMS API.
-Email notifications sent to designated recipients.
-You can configure the recipients and the message content in the alert settings of the system.
+EMAIL_SENDER=your_email@gmail.com
+EMAIL_PASSWORD=your_gmail_app_password
+EMAIL_RECEIVER=receiver_email@example.com
 
-License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+TWILIO_SID=your_twilio_sid
+TWILIO_AUTH_TOKEN=your_twilio_token
+TWILIO_PHONE=+1234567890
+RECEIVER_PHONE=+0987654321
+🧪 Sample Output
+📷 Oil Spill Map (Sentinel-1)
 
+📉 Anomalous Vessel Movements
+
+📄 PDF Report
+oil_spill_report.pdf – Contains spill location, area estimate, suspected vessels, and plots.
+
+📅 Deployment Plan
+Development: Validate thresholds and pipeline on local machine.
+
+Configuration: Setup .env, credentials, and API keys.
+
+Scheduler: Deploy on server with cron or use AWS Lambda with event triggers.
+
+Logging: Add logs and error handling for production use.
+
+Monitoring: Monitor API quota, alert delivery, and storage usage.
+
+🚀 Future Enhancements
+🔁 Real-time automation via cloud server
+
+🛰️ Integration with Sentinel-2 or drone-based imagery
+
+🧠 Deep Learning-based segmentation for better accuracy
+
+🌐 Web Dashboard using Flask/Django
+
+🗺️ GIS Analysis with GeoPandas and RasterIO
+
+📈 Historical spill pattern analysis
+
+🛟 Integration with Marine Safety Authorities
+
+📜 License
+This project is licensed under the MIT License.
+
+🙌 Acknowledgments
+ESA Copernicus Programme – Sentinel-1 Data
+
+Sentinel Hub – API access and evalscript support
+
+MarineTraffic – AIS sample datasets
+
+Twilio – SMS communication API
+
+ReportLab – PDF generation in Python
+
+🧠 Maintainer
+Your Name
+📧 your.email@example.com
+🌐 LinkedIn
