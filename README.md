@@ -85,7 +85,7 @@ The **Oil Spill Detection and Response System** is an end-to-end solution for re
             | - Embedded Plots & Maps              |
             +--------------------------------------+
 
-
+---
 ## 🛠 Technologies Used
 
 - **Python 3.11**
