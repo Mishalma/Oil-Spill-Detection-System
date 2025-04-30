@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_93f1f00759288924c3b69ff395cbca91 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_93f1f00759288924c3b69ff395cbca91" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_93f1f00759288924c3b69ff395cbca91 = L.map(
+                "map_93f1f00759288924c3b69ff395cbca91",
+                {
+                    center: [18.80987, 72.88862],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 8,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_810591c27d30e6add113b94391cc037e = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_810591c27d30e6add113b94391cc037e.addTo(map_93f1f00759288924c3b69ff395cbca91);
+        
+    
+            var circle_5da465236c15a68fc8f80cc0fe2e381b = L.circle(
+                [18.80987, 72.88862],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15297.058540778355, "stroke": true, "weight": 3}
+            ).addTo(map_93f1f00759288924c3b69ff395cbca91);
+        
+    
+        var popup_dc113f655b00354fec3d90e73438bebd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e01fe5cdeaac1e238468225eb983d18a = $(`<div id="html_e01fe5cdeaac1e238468225eb983d18a" style="width: 100.0%; height: 100.0%;">Oil Spill Location</div>`)[0];
+                popup_dc113f655b00354fec3d90e73438bebd.setContent(html_e01fe5cdeaac1e238468225eb983d18a);
+            
+        
+
+        circle_5da465236c15a68fc8f80cc0fe2e381b.bindPopup(popup_dc113f655b00354fec3d90e73438bebd)
+        ;
+
+        
+    
+    
+            var marker_b88e998c8ac33edab25408dd400c07c5 = L.marker(
+                [18.807231175551323, 72.89194225791591],
+                {
+}
+            ).addTo(map_93f1f00759288924c3b69ff395cbca91);
+        
+    
+            var icon_e991b2320127767053bc6e9c716e3999 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b04c7f036fc903803863091be15c04ec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_894adc6308fe798fe02359d35eabf10b = $(`<div id="html_894adc6308fe798fe02359d35eabf10b" style="width: 100.0%; height: 100.0%;">Predicted Spread: Lat 18.8072, Lon 72.8919</div>`)[0];
+                popup_b04c7f036fc903803863091be15c04ec.setContent(html_894adc6308fe798fe02359d35eabf10b);
+            
+        
+
+        marker_b88e998c8ac33edab25408dd400c07c5.bindPopup(popup_b04c7f036fc903803863091be15c04ec)
+        ;
+
+        
+    
+    
+                marker_b88e998c8ac33edab25408dd400c07c5.setIcon(icon_e991b2320127767053bc6e9c716e3999);
+            
+</script>
+</html>

@@ -1,0 +1,14 @@
+flask
+requests
+yagmail
+twilio
+reportlab
+schedule
+pandas
+numpy
+scikit-learn
+folium
+opencv-python
+python-dotenv
+seaborn
+google-generativeai

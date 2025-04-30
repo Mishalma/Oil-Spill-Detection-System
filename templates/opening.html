@@ -1,0 +1,207 @@
+<!-- templates/opening.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OilSpillGuard - Opening</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a2a6c, #b2d8d8, #1a2a6c, #0a0a0a), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop');
+            background-size: 400% 400%, cover;
+            background-blend-mode: overlay;
+            animation: wave 15s ease-in-out infinite, backgroundPan 60s linear infinite;
+        }
+
+        .opening-container {
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+            width: 90%; /* Ensure container fits within viewport */
+            max-width: 800px; /* Limit max width for larger screens */
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            color: #00c4cc;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px #00c4cc, 0 0 40px #00c4cc;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #b2d8d8;
+            margin-bottom: 30px;
+        }
+
+        .satellite-animation {
+            position: relative;
+            width: 40vw; /* Use viewport width for dynamic sizing */
+            height: 40vw;
+            max-width: 300px; /* Cap the size for larger screens */
+            max-height: 300px;
+            margin: 0 auto;
+        }
+
+        .earth {
+            position: absolute;
+            width: 66.67%; /* 200px / 300px */
+            height: 66.67%;
+            background: radial-gradient(circle, #1a2a6c, #0a0a0a);
+            border-radius: 50%;
+            box-shadow: 0 0 30px #1a2a6c;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .satellite {
+            position: absolute;
+            width: 6.67%; /* 20px / 300px */
+            height: 6.67%;
+            background: #00c4cc;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00c4cc;
+            animation: orbit 5s linear infinite;
+        }
+
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(43.33vw) rotate(0deg); } /* 130px / 300px */
+            100% { transform: rotate(360deg) translateX(43.33vw) rotate(-360deg); }
+        }
+
+        .start-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000;
+            background: #00c4cc;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .start-button:hover {
+            background: #00a1a7;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00c4cc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 15px #00c4cc, 0 0 30px #00c4cc; }
+            to { text-shadow: 0 0 30px #00c4cc, 0 0 60px #00c4cc; }
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes wave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+            p {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            .satellite-animation {
+                width: 50vw;
+                height: 50vw;
+                max-width: 200px;
+                max-height: 200px;
+            }
+            .start-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: 1px;
+            }
+            p {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+            .satellite-animation {
+                width: 60vw;
+                height: 60vw;
+                max-width: 150px;
+                max-height: 150px;
+            }
+            .start-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="opening-container">
+        <h1>OilSpillGuard</h1>
+        <p>Protecting Our Oceans with Cutting-Edge Technology</p>
+        <div class="satellite-animation">
+            <div class="earth"></div>
+            <div class="satellite"></div>
+        </div>
+        <a href="{{ url_for('dashboard') }}" class="start-button">Start</a>
+    </div>
+
+    <script>
+        // Auto-redirect after 5 seconds
+        setTimeout(() => {
+            window.location.href = "{{ url_for('dashboard') }}";
+        }, 5000);
+    </script>
+</body>
+</html>

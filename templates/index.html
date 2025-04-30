@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OilSpillGuard Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #000000);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Radar Background */
+        .radar-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .radar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .radar-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(59, 130, 246, 0.1) 20%, rgba(59, 130, 246, 0.1) 40%, transparent 40%, transparent 60%, rgba(59, 130, 246, 0.1) 60%, rgba(59, 130, 246, 0.1) 80%, transparent 80%);
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .radar-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 100%;
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateX(-50%);
+        }
+
+        .radar-grid::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-50%);
+        }
+
+        .radar-sweep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(transparent 0deg, rgba(59, 130, 246, 0.4) 30deg, transparent 60deg);
+            border-radius: 50%;
+            animation: radarSpin 6s infinite linear;
+        }
+
+        .radar-blips div {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            animation: blipFade 2s infinite;
+        }
+
+        .radar-blips div:nth-child(1) {
+            top: 20%;
+            left: 70%;
+        }
+
+        .radar-blips div:nth-child(2) {
+            top: 60%;
+            left: 30%;
+        }
+
+        .radar-blips div:nth-child(3) {
+            top: 40%;
+            left: 80%;
+        }
+
+        .radar-blips div:nth-child(4) {
+            top: 70%;
+            left: 50%;
+        }
+
+        @keyframes radarSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes blipFade {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 2px solid #3b82f6;
+            box-shadow: 0 2px 15px rgba(59, 130, 246, 0.2);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "spill-details spill-details spill-details"
+                "satellite-image satellite-image spill-map"
+                "ais-anomaly ais-anomaly latest-report"
+                "llm llm llm";
+            gap: 20px;
+            padding: 20px 0;
+            grid-template-columns: 1fr 1fr 1fr; /* Equal space for Satellite Image and Spill Map */
+        }
+
+        .section {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .spill-details { grid-area: spill-details; }
+        .satellite-image { grid-area: satellite-image; }
+        .ais-anomaly { grid-area: ais-anomaly; }
+        .spill-map { grid-area: spill-map; }
+        .latest-report { grid-area: latest-report; }
+        .llm { grid-area: llm; }
+
+        .section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 5px;
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+        }
+
+        .content {
+            padding: 15px;
+            background: rgba(50, 50, 50, 0.5);
+            border-radius: 8px;
+            border: 1px solid #4b5e8a;
+        }
+
+        /* Horizontal Spill Details */
+        .spill-details .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 15px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .spill-details .content:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .spill-details .detail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+        }
+
+        .spill-details .detail-item .label {
+            font-weight: 600;
+            color: #93c5fd;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .spill-details .detail-item .value {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        img, iframe {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #4b5e8a;
+            display: block;
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            background: #1e1e1e;
+        }
+
+        .query-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .query-form input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #4b5e8a;
+            border-radius: 5px;
+            background: rgba(50, 50, 50, 0.7);
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .query-form input[type="text"]:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            outline: none;
+        }
+
+        .query-form input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #3b82f6;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .query-form input[type="submit"]:hover {
+            background: #2563eb;
+            transform: scale(1.03);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-areas:
+                    "header header header"
+                    "spill-details spill-details spill-details"
+                    "satellite-image satellite-image satellite-image"
+                    "spill-map spill-map spill-map"
+                    "ais-anomaly ais-anomaly ais-anomaly"
+                    "latest-report latest-report latest-report"
+                    "llm llm llm";
+                grid-template-columns: 1fr;
+            }
+
+            .spill-details .content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .spill-details .detail-item {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                text-align: left;
+            }
+
+            .spill-details .detail-item .label {
+                margin-bottom: 0;
+            }
+
+            .radar {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .section h2 {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .spill-details .detail-item .label,
+            .spill-details .detail-item .value {
+                font-size: 0.9rem;
+            }
+
+            .radar {
+                width: 300px;
+                height: 300px;
+            }
+
+            .radar-blips div {
+                width: 6px;
+                height: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="radar-background">
+        <div class="radar">
+            <div class="radar-grid"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-blips">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>OilSpillGuard Dashboard</h1>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="section spill-details">
+                <h2>Spill Details</h2>
+                <div class="content">
+                    <div class="detail-item">
+                        <span class="label">Latitude</span>
+                        <span class="value">{{ spill_data.lat }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Longitude</span>
+                        <span class="value">{{ spill_data.lon }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Vessel</span>
+                        <span class="value">{{ spill_data.vessel }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Area</span>
+                        <span class="value">{{ spill_data.area }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Time</span>
+                        <span class="value">{{ spill_data.time }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section satellite-image">
+                <h2>Satellite Image</h2>
+                <div class="content">
+                    {% if image_exists %}
+                        <p><strong>Region:</strong> Indian Ocean (Lat: {{ spill_data.lat }}, Lon: {{ spill_data.lon }})</p>
+                        <img src="{{ url_for('static', filename='indian_ocean_specific.png') }}" alt="Satellite Image" style="max-height: 400px; object-fit: contain;" onerror="this.src='https://via.placeholder.com/2056x2056?text=No+Satellite+Data';">
+                        <p><strong>Spill Prediction:</strong> {{ spill_analysis }}</p>
+                        {% if spill_detected %}
+                            <p style="color: #f87171;">Oil spill likely detected!</p>
+                        {% else %}
+                            <p style="color: #34d399;">No oil spill detected.</p>
+                        {% endif %}
+                    {% else %}
+                        <p>No satellite image available for this area.</p>
+                        <img src="https://via.placeholder.com/2056x2056?text=No+Satellite+Data" alt="No Image" style="max-height: 400px; object-fit: contain;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section spill-map">
+                <h2>Spill Map</h2>
+                <div class="content">
+                    {% if map_exists %}
+                        <iframe src="{{ url_for('static', filename='spill_map.html') }}" width="100%" height="400"></iframe>
+                    {% else %}
+                        <p>No map available. Check logs for errors.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section ais-anomaly">
+                <h2>AIS Anomaly Plot</h2>
+                <div class="content">
+                    {% if anomaly_plot_exists %}
+                        <img src="{{ url_for('static', filename='anomaly_plot.png') }}" alt="Anomaly Plot">
+                    {% else %}
+                        <p>No anomaly plot available.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section latest-report">
+                <h2>Latest Report</h2>
+                <div class="content">
+                    {% if pdf_exists %}
+                        <p><a href="{{ url_for('static', filename=latest_pdf | replace('static/', '')) }}" target="_blank" style="color: #3b82f6; text-decoration: none;">View Latest Report ({{ latest_pdf }})</a></p>
+                    {% else %}
+                        <p>No report available yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section llm">
+                <h2>LLM Insights</h2>
+                <div class="content">
+                    <p>{{ llm_response | safe }}</p>
+                    <form method="POST" class="query-form">
+                        <input type="text" name="query" placeholder="e.g., What should we do?" required>
+                        <input type="submit" value="Ask">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
