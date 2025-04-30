@@ -86,122 +86,75 @@ The **Oil Spill Detection and Response System** is an end-to-end solution for re
             +--------------------------------------+
 
 
-🛠 Technologies Used
-Python 3.11
+## 🛠 Technologies Used
 
-Sentinel Hub API (Sentinel-1 SAR)
+- **Python 3.11**
+- **Sentinel Hub API** – for accessing Sentinel-1 SAR data
+- **AIS CSV Data** – Sample dataset: `Ais_sample.csv`
+- **yagmail** – Email notification service
+- **twilio** – SMS alert system
+- **reportlab** – PDF report generation
+- **pandas**, **numpy**, **scikit-learn** – Data analysis and ML
+- **matplotlib**, **Pillow** – Data visualization and image handling
+- **dotenv** – Secure environment variable management
 
-AIS CSV Data (Sample: Ais_sample.csv)
+---
 
-yagmail, twilio – for email/SMS alerts
+## 📦 Installation
 
-reportlab – PDF report generation
+### 1. Clone the Repository
 
-pandas, numpy, scikit-learn, matplotlib, Pillow
-
-dotenv – Secure configuration handling
-
-📦 Installation
-Clone the Repository
-bash
-Copy
-Edit
+```bash
 git clone https://github.com/your-username/oil-spill-detection-mumbai.git
 cd oil-spill-detection-mumbai
-Create Conda Environment
-bash
-Copy
-Edit
-conda env create -f environment.yml
-conda activate oil_spill_detection
-Install Additional Dependencies (if needed)
-bash
-Copy
-Edit
-pip install -r requirements.txt
-🚀 Usage
-Run the main detection script:
 
-bash
-Copy
-Edit
-python oil_spill_detection.py
-Output files generated:
-
-oil_spill_detection_mumbai.png – Binary spill map
-
-ais_anomalies.png – Highlighted anomalous vessel movements
-
-oil_spill_report.pdf – Detailed PDF report
-
-Email and SMS sent to configured recipients
-
-🔐 Environment Variables
-Create a .env file in the root directory with the following:
-
-env
-Copy
-Edit
+#🔐 Environment Variables
+# Sentinel Hub Credentials
 SENTINELHUB_CLIENT_ID=your_client_id
 SENTINELHUB_CLIENT_SECRET=your_client_secret
 
+# Email Alert Configuration
 EMAIL_SENDER=your_email@gmail.com
 EMAIL_PASSWORD=your_gmail_app_password
 EMAIL_RECEIVER=receiver_email@example.com
 
+# SMS Alert Configuration
 TWILIO_SID=your_twilio_sid
 TWILIO_AUTH_TOKEN=your_twilio_token
 TWILIO_PHONE=+1234567890
 RECEIVER_PHONE=+0987654321
-🧪 Sample Output
-📷 Oil Spill Map (Sentinel-1)
 
-📉 Anomalous Vessel Movements
 
-📄 PDF Report
-oil_spill_report.pdf – Contains spill location, area estimate, suspected vessels, and plots.
+#🚀 Future Enhancements
+🔁 Real-time automation on cloud (AWS/GCP/Azure)
 
-📅 Deployment Plan
-Development: Validate thresholds and pipeline on local machine.
+🛰️ Use Sentinel-2 optical or drone data for cross-validation
 
-Configuration: Setup .env, credentials, and API keys.
+🧠 Add deep learning-based segmentation (e.g., U-Net)
 
-Scheduler: Deploy on server with cron or use AWS Lambda with event triggers.
+🌐 Interactive dashboard using Flask or Django
 
-Logging: Add logs and error handling for production use.
+🗺️ Spatial analytics with GeoPandas and RasterIO
 
-Monitoring: Monitor API quota, alert delivery, and storage usage.
+📈 Analyze historical spill patterns and trends
 
-🚀 Future Enhancements
-🔁 Real-time automation via cloud server
+🛟 API integration with Indian Coast Guard/MoES
 
-🛰️ Integration with Sentinel-2 or drone-based imagery
+ #📜 License
+ This project is licensed under the MIT License. See LICENSE for details.
 
-🧠 Deep Learning-based segmentation for better accuracy
+#🙌 Acknowledgments
+ESA Copernicus Programme – Sentinel-1 SAR Data
 
-🌐 Web Dashboard using Flask/Django
+Sentinel Hub – Evalscript and API support
 
-🗺️ GIS Analysis with GeoPandas and RasterIO
+MarineTraffic – AIS datasets
 
-📈 Historical spill pattern analysis
-
-🛟 Integration with Marine Safety Authorities
-
-📜 License
-This project is licensed under the MIT License.
-
-🙌 Acknowledgments
-ESA Copernicus Programme – Sentinel-1 Data
-
-Sentinel Hub – API access and evalscript support
-
-MarineTraffic – AIS sample datasets
-
-Twilio – SMS communication API
+Twilio – SMS delivery platform
 
 ReportLab – PDF generation in Python
 
-🧠 Maintainer
-Your Name
-📧 your.email@example.com
+#🧠 Maintainer
+Mohammed Mishal
+📧 mohammedmishal430@gmail.com
 🌐 LinkedIn
